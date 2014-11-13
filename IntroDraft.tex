@@ -1,0 +1,299 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+% Theorem Styles
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+% Definition Styles
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+\DeclareMathOperator{\Union}{\mathop{\bigcup}}
+\title{	
+  \normalfont \normalsize 
+  %\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+  \horrule{0.5pt} \\[0.2cm] % Thin top horizontal rule
+  Intro Material \\ % The assignment title
+  \horrule{2pt} \\[0.2cm] % Thick bottom horizontal rule
+}
+
+\author{Joseph Rennie} % Your name
+
+%\date{\normalsize\today} % Today's date or a custom date
+
+\newcommand{\cat}[1]{\ensuremath{\mathbf{#1}} }
+\newcommand{\Pre}{\cat{Preorder}}
+\newcommand{\Al}{\cat{Alex}}
+\newcommand{\poset}[1]{\mathcal{P}\left( #1 \right) }
+\newcommand{\comp}[2]{#1 \circ #2}
+\newcommand{\T}[1]{\mathcal{T}\left( #1 \right)}
+\newcommand{\Top}{\cat{Top}}
+\newcommand{\union}[2]{\Union_{#1} #2}
+\newcommand{\homot}{\simeq}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+
+%\maketitle % Print the title
+
+\section{Alexandroff Topological Spaces}
+\subsection{What they are}
+\indent
+The notion of a topological space is meant to provide a theoretical framework for the intuitive notion of invariant properties of geometric objects.
+There are several equivalent formulations of the accepted approach to this, all of which ultimately revolve around the idea of a neighborhood.
+Here we state only three of them.
+\begin{definition}
+  A \textbf{topological space} is a set $X$ with a set of subsets $\mathcal{O}$ such that $\mathcal{O}$ is closed under arbitrary union and finite intersection, and $\mathcal{O}$ contains both $\emptyset$ and $X$.
+\end{definition}
+
+In the above definition we find the most direct connection to neighborhoods in that the elements of $\mathcal{O}$ (called ``open sets'') play the role of neighborhoods.
+
+\begin{definition}
+  A \textbf{topological space} is a set $X$ with a set of subsets $\mathcal{C}$ such that $\mathcal{C}$ is closed under finite union and arbitrary intersection, and $\mathcal{C}$ contains both $\emptyset$ and $X$.
+\end{definition}
+
+\indent
+Here, the elements of $\mathcal{C}$ are the complements of open sets (called ``closed sets'').
+It is easy to see that one can contruct a topology under one definition given one under the other definition.
+It is also clear that for finite sets, the definitions are indistinguishable, in the sense that the only thing that changes from one definition to the other is the name of the set of subsets.
+In fact, finite spaces are not the only spaces for which this is true. 
+
+\begin{definition}
+  An \textbf{Alexandroff space} is a topological space wherein $\mathcal{O}$ is closed under \textit{arbitrary intersections}
+\end{definition}
+For example, given any set $X$ one may take the entire powerset of $X$ to be $\mathcal{O}$ or $\mathcal{C}$ (this is called ``the discrete topology on $X$'').
+Or one may take on the sets $\emptyset$ and $X$ to be in $\mathcal{O}$ or $\mathcal{C}$ (called ``the trivial topology'').
+
+The following is yet another equivalent definition of a topological space.
+\begin{definition}
+  A \textbf{topological space} is a set $X$ with a mapping $\overline{\cdot}:\mathcal{P}\left( X \right)\rightarrow \mathcal{P}\left( X \right)$ such that the following hold:
+  \begin{enumerate}
+    \item $\emptyset=\overline{\emptyset}$
+    \item $\forall A\subseteq X, A\subseteq \overline{A}$
+    \item $\forall A\subseteq X, \overline{\overline{A}}=\overline{A}$
+    \item $\forall A,B\in \mathcal{P}\left( X \right),\overline{A}\cup\overline{B}=\overline{A\cup B}$
+  \end{enumerate}
+\end{definition}
+To connect this to the previous two, one interprets the mapping as that which sends a subset to the smallest closed subset containing it.
+Hence, the specification to Alexandroff spaces is obtained by changing the last axiom to hold for arbitrary unions.
+
+\subsection{Why we care about them}
+
+\indent
+Keeping in mind the original goal of studying invariant properties of spaces, we motivate the study of these spaces.
+The end goal of this section will be to establish a combinatorial approach to studying Alexandroff spaces.
+In this we see the advantage to working with these spaces especially as we weaken our notion of what it means for a property to be invariant.
+For the remainder of this section, $X$ will be assumed to be an Alexandroff space.
+
+
+\indent
+Everything that makes Alexandroff spaces nice ultimately comes down to the fact that one can form the minimal neighborhood of a given point.
+\begin{definition}
+  For any $x\in X$, the \textbf{minimal neighborhood} of $x$ $U_x$ is the intersection of all open sets containing $x$.  
+\end{definition}
+
+\indent
+One immediate, nice property we get from this is the existence of a minimal generating set of subsets for the topology.
+\begin{definition}
+  A \textbf{basis} for a topology is a set of open sets $\mathcal{B}$ such that for any open set $U\in \mathcal{O}$ $U$ can be written as some union of sets in $\mathcal{B}$.
+\end{definition}
+Taking the set of $U_x$ for all $x\in X$ not only gives us our minimal generating set.
+
+\begin{lemma}
+  Let $\mathcal{B}=\left\{ U_x|x\in X \right\}$.
+  Then $\mathcal{B}$ is a basis for the topology on $X$ and if $\mathcal{B}'$ is another basis, then $\mathcal{B}\subseteq \mathcal{B}'$.
+  
+\end{lemma}
+\begin{proof}
+  Let $U$ be any open set.
+  Then we claim that $U= \Union \limits_{x\in U} U_x$.
+  The forward containment is obvious, and if some $y\in U_x$ where $x\in U_x$ then by the definition of $U_x$, $y\in U$ since $U$ is open and contains $x$.
+  Thus, $\mathcal{B}$ is a basis.
+
+
+  Suppose $\mathcal{B}'$ is another basis.
+  Let $x\in X$ and suppose $U_x = \Union B_i$ where each $B_i \in \mathcal{B}'$.
+  Then some particular $B_j$ contains $x$ and thus contains $U_x$.
+  Furthermore, $B_j$ must equal $U_x$ otherwise we have contradicted our assumption that $U_x=\Union B_i$.
+
+\end{proof}
+
+This immediately gives us a very special property of Alexandroff spaces which will come in handy latter when we discuss function spaces over them.
+\begin{definition}
+  A space is \textbf{first countable} if it has a countable \textbf{neighborhood basis}, which is a basis $\mathcal{B}$ such that for every point $x\in X$ there is a countable subset of $\mathcal{B}$ such that if $x\in U$ is open then $U$ contains some element of $\mathcal{B}$.
+\end{definition}
+In the case of Alexandroff spaces, every point only requires a single element of our basis, namely $U_x$.
+
+While first countability and having a minimal basis are nice properties of a space, these are not the reasons we are interested in Alexandroff spaces. Rather they are good starting points for the discussion of why we are interested in them.
+
+\subsection{A-spaces}
+Let us continue the investigation of additional axioms for topological spaces. While there are many separation axioms, it is most insightful to consider only two.
+\begin{definition}
+  A topological space is $T_0$ if any two distinct points have some open set which contains one and not the other. We say that the open set distinguishes the two points and that the topology distinguishes points.
+\end{definition}
+\begin{definition}
+  A topological spaces is $T_1$ if every point is a closed set.
+\end{definition}
+We stop here even though there are stronger separations (in the sense that they imply $T_1$) because any Alexandroff space which is $T_1$ must have the discrete topology.
+Although, it is worthwhile to note that the next separation axiom is commonly assumed in point-set topology.
+It is also worthwhile to mention that there are separations ``between'' $T_0$ and $T_1$, but they provide little insight in our discussion.
+Here, we focus on the implications of an Alexandroff space being $T_0$. Such a space will be called an \textbf{A-space}.
+
+\subsection{Preorders and Topologies}
+
+Any topological space admits a \textbf{specialization preorder} $\leq_{sp}$ wherein $x\leq_{sp} y \iff x\in \overline{\left\{ y \right\}}$.
+In this context, an Alexandroff space, is one in which this preorder \dots
+That is, for Alexandroff spaces, $x\leq_{sp} y \iff y\in U_x$, so one can use a preorder to define a topology by taking as open sets $\left\{ y|x\leq_{sp} y \right\}$ for each $x\in X$.
+
+A particularly nice consequence of this is that Alexandroff spaces admit another preorder which we will denote $\leq$, where $x\leq y \iff U_x \subseteq U_y$. 
+We are essentially taking as our elements the upper sets of the specialization preorder and ordering them by containment. 
+What makes the Alexandroff space nice in this regard is that each of these sets is open.
+Thus, continuous maps of Alexandroff spaces correspond to order-preserving maps on their preorders.
+%Explain MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Furthermore, we have a preorder on the basis for the topology. 
+Since, the minimal bases are unique, a homeomorphism must be a permutation of the basis elements which is also order preserving with an order preserving inverse.
+Thus, if we look at the matrix of covering relations, a permutation of the basis elements has at least one corresonding homeomorphism.
+
+The failure of this correspondence to be bijective arises from the fact that there may be multiple covers for a given element in a general preorder.
+What we need to make this a bijection is for the cover of an element to be unique. 
+It is obvious that specifying to a poset gives us uniqueness of covers.
+Perhaps slightly less obvious is the fact that if a preorder has unique covers for every element, then it is a poset.
+Nonetheless, the following quick sketch of a proof should suffice to make this clear: If $x,y\in X$ and $x',y'$ are their corresponding unique coverings, then $$(x\leq y \text{ and } y\leq x)\Rightarrow y\leq y'\leq x\leq x' \leq y$$
+This gives us that $x'$ covers $y$ (and $y'$ covers $x$), which by uniqueness of coverings identifies $x'$ and $y'$ as one element we shall call $z$.
+Recognizing that $x$ and $y$ are both covers of $z$ then identifies them, and completes the proof of anti-symmetricity.
+
+Since anti-symmetricity of the preorder corresponds to the topology being $T_0$ (in the context of both the specialization preorder and the Alexandroff topology preoreder), we have already one motivation for looking at A-spaces.
+Specifically, we can count homeomorphism classes of finite spaces by reducing to the problem of counting finite $T_0$ spaces.
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+\textbf{ (I understand where the stirling numbers come into play but I'm not sure I want to include that here\dots Thoughts?)}
+As we consider weaker equivalences, we shall find further motivation for looking at these spaces.
+For now, we will run with the fact that there is a bijective correspondence between posets and A-spaces.
+\subsection{Further Correspondence}
+The goal of this section is to show that this bijection is only a part of a much more interesting connection between Alexandroff spaces and Posets.
+Specifically, there is an isomorphism from the category of Alexandroff spaces (denoted \Al) to that of preorders (denoted \Pre).
+Here \Al is a full subcategory of \Top so that the mappings are continuous functions.
+The category \Pre has preorders as objects and order preserving functions as mappings, where an order preseving map $f$ satisfies $x\leq y\Rightarrow f(x)\leq f(y)$. 
+Thus, our task is to show that continuous maps over $X$ as a topological space are also order preserving maps over $X$ as a preorder, and vice-versa.
+
+\begin{proposition}
+  Given $f:X\rightarrow Y$, $f$ is continuous if and only if $f$ is order preserving.
+\end{proposition}
+\begin{proof}
+  For the reverse implication, consider an open set $V\subseteq Y$ with preimage $U=f^{-1}\left( V \right)$.
+  Clearly, $U\subseteq \union{x\in U}{U_x}$.
+  For any $x\in U,y\in U_x$ we have $y\leq x$ and since $f$ preserves order, 
+  $$f(y)\in U_{f(y)}\subseteq U_{f(x)}\subseteq V $$
+  where the last inclusion is by definition since $V\ni f(x)$ is open.
+  Therefore, $f(y)\in V$ which implies $y\in U$ and thus $U= \union{x\in U}{U_x}$ a union of open sets. 
+  Hence, $f$ is continuous.
+
+  For the forward implication, supposing continuity, we have for $y\leq x$, 
+  $$y\in U_y\subseteq U_x \subseteq f^{-1}\left( U_{f(x)} \right) $$
+  where the latter inclusion holds by continuity.
+  Hence, $f(y)\in U_{f(x)}$ and thus $U_{f(y)}\subseteq U_{f(x)}$.
+\end{proof}
+
+It is worth noting that this is a rather unusual isomorphism of categories wherein the functor is essentially the identity mapping on both the objects and the morphisms. Nonetheless, \Al and \Top are isomorphic.  
+\section{Properties of Posets}
+Perhaps in an appendix?
+\section{Topological Constructions}
+
+\section{Topological Constructions (computational)}
+The goal of this section will be to consider the poset/A-space correspondence in light of some common topological constructions. 
+%We must introduce another functor (?? I'm pretty sure but haven't checked yet??).
+Let us denote the poset corresponding to an A-space $X$ by $\poset{X}$, the Alexandroff Topology of a poset $X$ by $\T{X}$.
+One could consider a preorder to be a directed graph.
+It is an intuitive, but non-trivial result that the adjacency matrix of such a graph has full rank if and only if the corresponding preorder is a poset.
+%DEFINE KQ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+Hence, the Kolmogorov quotient correponds to the largest full rank minor (non-trivial).
+\subsection{Product}
+Kronecker Product\dots
+\subsection{Disjoint Union}
+Direct Sum\dots
+\subsection{Quotient}
+I think I figured this out, but it isn't pretty. It's basically vertex contraction.
+\subsection{Subspacee}
+This is pretty simple: vertex deletion (i.e. delete the row and column)
+\subsection{Join, Wedge, Smash}
+I thought this would be a nice way to illustrate the above more concretely since these arre constructed via the above.
+
+%Even with no further restrictions on the space this provides a nice reduction of the problem of counting homeomorphism classes.
+
+\section{Homotopy Equivalence}
+Up to now we have considered equivalence of spaces- and thus invariants under- homeomorphism.
+To review, a homeomorphism $f:X\rightarrow Y$ is a map with and inverse $g:Y\rightarrow X$, which is to say that $\comp{f}{g}=id_Y$ and $\comp{g}{f}=id_X$.
+Given that topology is concerned with a more flexible notion of equivalence, it seems to be a very rigid definition. 
+\begin{definition}
+  Two maps $f,g:X\rightarrow Y$ are \textbf{homotopic}, written $f~g$, if there exists a map $H:I\times X\rightarrow Y$ such that $H(0,x)=f(x)$ and $H(1,x)=g(x)$.
+\end{definition}
+Intuitively, one may think of this as an equivalence between mappings which are path connected in $Y^X$, although in reality this is not always the case.
+Luckily for us, mappings from finite spaces to finite spaces satisfy this notion.
+However, we will not prove this until \ref{paths}.
+We first look at some other implications of switching to a weaker equivalence of spaces.
+\begin{definition}
+  Two topological spaces $X,Y$ are \textbf{homotopy equivalent}, written $X\homot Y$, if there exist maps $f:X\rightarrow Y$ and $g:Y\rightarrow X$ such that $\comp{f}{g}~ id_Y$ and $\comp{g}{f}~ id_X$.
+\end{definition}
+Note the similarity with the definition of homeomorphism.
+All that changes is the weakness of the equivalence between maps.
+Thus, it is clear that homeomorphic spaces are homotopy equivalent as identical maps are homotopic.
+However, this is a strictly weaker relation as the following example shows.
+\begin{example}
+  Consider $\R$ under the standard topology and let $f:\R \rightarrow {0}$, $g:{0}\rightarrow \R$, $f(x)=x$, and $g(0)=0$. 
+  Then, $\comp{f}{g}=id_{\left\{ {0} \right\}}$ so it is obviously homotopic to the identity.
+  Further, $\comp{g}{f}$ is the constant zero mapping, which is homotopic to the identity via $H(t,x)=(1-t)x$.
+  Thus, $\R \homot \left\{ 0 \right\}$, whereas the two are obviously not homeomorphic since there is no bijection between them.
+\end{example}
+
+Looking at this through a categorical lens, we can obtain the category of homotopy equivalence classes as a quotient category of \Top by identifying homotopic maps.
+Thus, objects which are homotopy equivalent become isomorphic in the categorical sense.
+We may trace the correspondence between \Al, as a full subcategory of $\Top$, and its equivalent categories through this action of quotienting to see what we get.
+In particular, we shall focus on the corresponding action on $\Pre$ as its results are quite fascinating and yield many insightful connections to combinatorics.
+
+\subsection{paths}
+\label{paths}
+
+\section{Weak Homotopy Equivalence}
+
+\section{Topological Constructions (Algebraic)}
+%In the same way we followed topological constructions through the adjacency matrix functor (?Not sure I can call it this yet, but working on it), here we do the same for another more algebraic connection, the simplicial complex.
+%In this context, an Alexandroff space is one in which this preorder yields a directed set. In other words, the fact that arbitrary unions of closed sets are closed gives us an upper bound for every subset of an Alexandroff space, namely the 
+%The strongest topological equivalence under which a property can be invariant, is the familiar homeomorphism.
+
+
+
+\end{document}
